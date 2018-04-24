@@ -5,7 +5,7 @@
   "main": "app.js",
   "repository": "git@github.com:sonarplanet/sonarplanet.github.io.git",
   "author": "spacelephant",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "scripts": {
     "build": "./node_modules/.bin/tsc",
     "start": "node ./dist/app.js"
