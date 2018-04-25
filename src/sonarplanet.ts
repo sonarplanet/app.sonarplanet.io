@@ -27,6 +27,8 @@ let registerServiceWorker = (ethAddress: string) => {
       }).catch((error) => {
         console.log('Registration failed with ' + error)
       })
+  } else  {
+    $('.alert.alert-warning').css('display', 'block')
   }
 }
 

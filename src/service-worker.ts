@@ -16,7 +16,7 @@ self.addEventListener('push', (event: MessageEvent) => {
 
   var notificationOptions = {
     body: "Une nouvelle transaction sur l'adresse que vous suivez. Cliquez pour plus d'informations.",
-    icon: '../images/logo-sonarplanet-dark.png',
+    icon: './images/logo-sonarplanet-dark.png',
     data: {
       url: url
     }
