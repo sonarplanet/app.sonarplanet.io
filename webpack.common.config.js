@@ -17,8 +17,7 @@ module.exports = {
       {
         test: /\.ts$/,
         exclude: [
-          /node_modules/,
-          'config.ts'
+          /node_modules/
         ],
         use: {
           loader: "ts-loader"
