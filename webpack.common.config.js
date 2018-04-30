@@ -6,7 +6,6 @@ module.exports = {
     sonarplanet: ['./src/sonarplanet.ts', './src/styles/sonarplanet.scss'],
     'service-worker': './src/service-worker.ts'
   },
-  target: node,
   output: {
     filename: './js/[name].js'
   },
