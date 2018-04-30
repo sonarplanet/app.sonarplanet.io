@@ -7,8 +7,8 @@
   "author": "spacelephant",
   "license": "Apache-2.0",
   "scripts": {
-    "dev": "webpack --mode development",
-    "prod": "webpack --mode production"
+    "dev": "webpack -p --progress --config=webpack.development.config.js --mode development",
+    "prod": "webpack --config=webpack.production.config.js --mode production"
   },
   "devDependencies": {
     "@types/jquery": "^3.3.1",
@@ -24,6 +24,8 @@
     "ts-loader": "^4.2.0",
     "typescript": "^2.8.1",
     "webpack": "^4.6.0",
-    "webpack-cli": "^2.0.15"
+    "webpack-cli": "^2.0.15",
+    "webpack-merge": "^4.1.2",
+    "webpack-replace": "^1.0.0"
   }
 }

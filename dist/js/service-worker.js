@@ -78,28 +78,8 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-self.addEventListener('push', function (event) {
-    var url;
-    if (event.data) {
-        url = event.data.json().url;
-    }
-    var notificationOptions = {
-        body: "Une nouvelle transaction sur l'adresse que vous suivez. Cliquez pour plus d'informations.",
-        icon: './images/logo-sonarplanet-dark.png',
-        data: {
-            url: url
-        }
-    };
-    self.registration.showNotification("Notification Sonar Planet", notificationOptions);
-});
-self.addEventListener('notificationclick', function (event) {
-    var url = event.notification.data.url;
-    event.notification.close();
-    event.waitUntil(self.clients.openWindow(url));
-});
-
+eval("self.addEventListener('push', function (event) {\n    var url;\n    if (event.data) {\n        url = event.data.json().url;\n    }\n    var notificationOptions = {\n        body: \"Une nouvelle transaction sur l'adresse que vous suivez. Cliquez pour plus d'informations.\",\n        icon: './images/logo-sonarplanet-dark.png',\n        data: {\n            url: url\n        }\n    };\n    self.registration.showNotification(\"Notification Sonar Planet\", notificationOptions);\n});\nself.addEventListener('notificationclick', function (event) {\n    var url = event.notification.data.url;\n    event.notification.close();\n    event.waitUntil(self.clients.openWindow(url));\n});\n\n\n//# sourceURL=webpack:///./src/service-worker.ts?");
 
 /***/ })
 
 /******/ });
-//# sourceMappingURL=service-worker.js.map

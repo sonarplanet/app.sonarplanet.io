@@ -1,7 +1,7 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin")
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin')
 
-module.exports = (env) => ({
+module.exports = {
   entry: {
     sonarplanet: ['./src/sonarplanet.ts', './src/styles/sonarplanet.scss'],
     'service-worker': './src/service-worker.ts'
@@ -12,13 +12,14 @@ module.exports = (env) => ({
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
   },
-  mode: env || 'development',
-  devtool: "source-map",
   module: {
     rules: [
       {
         test: /\.ts$/,
-        exclude: /node_modules/,
+        exclude: [
+          /node_modules/,
+          'config.ts'
+        ],
         use: {
           loader: "ts-loader"
         }
@@ -46,15 +47,9 @@ module.exports = (env) => ({
         },
         {
           loader: "css-loader", // translates CSS into CommonJS
-          options: {
-            sourceMap: true
-          }
         },
         {
           loader: "sass-loader", // compiles Sass to CSS
-          options: {
-            sourceMap: true
-          }
         }]
       }
     ]
@@ -68,4 +63,4 @@ module.exports = (env) => ({
     })
   ]
 
-})
+}

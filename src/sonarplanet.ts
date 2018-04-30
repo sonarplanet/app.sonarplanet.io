@@ -1,4 +1,5 @@
-const sonarplanetBackendUrl = 'http://localhost:8080/register-to-notification'
+const sonarplanetBackendUrl = '%%SONAR_BACK_URL%%'
+const register = '/register-to-notification'
 
 $(document).ready(() => {
   var form = document.getElementById("trackAddressForm") as HTMLFormElement;
@@ -40,7 +41,7 @@ let subscribeDevice = (registration: ServiceWorkerRegistration, ethAddress: stri
           subscription: subscription,
           address: ethAddress
         }
-        $.post(sonarplanetBackendUrl, JSON.stringify(subscriptionObject), (data: JSON) => { })
+        $.post(sonarplanetBackendUrl + register, JSON.stringify(subscriptionObject), (data: JSON) => { })
           .done(() => { $('.alert.alert-success').css('display', 'block') })
           .fail((jqXHR, textStatus, errorThrown) => {
             console.log(errorThrown)
