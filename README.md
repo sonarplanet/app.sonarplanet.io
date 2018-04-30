@@ -12,13 +12,15 @@ Generates files in dist repository
 ```
 yarn dev
 ```
+Deployment url: http://localhost:3000
+
 
 ### Integration mode
 ```
 yarn integ
 ```
 
-### Development mode
+### Production mode
 ```
 yarn prod
 ```
