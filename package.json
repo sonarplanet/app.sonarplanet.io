@@ -8,6 +8,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "dev": "webpack -p --progress --config=webpack.development.config.js --mode development",
+    "noprod": "webpack -p --progress --config=webpack.no-prod.config.js --mode development",
     "prod": "webpack --config=webpack.production.config.js --mode production"
   },
   "devDependencies": {
