@@ -1,0 +1,18 @@
+[Settings]
+  ID = "front-sonarplanet"
+
+# Settings in the [build] context are global and are applied to all contexts unless otherwise overridden by more specific contexts.
+
+[build]
+# This is the directory that you are publishing from (relative to root of your repo)
+  publish = "dist"
+
+[context.develop] # develop branch name
+  command = "yarn integ"
+
+[context.branch-deploy] # all development branches: feat/fix branches ...
+  command = "yarn integ"
+
+[context.deploy-preview] # Github PR
+  command = "yarn integ"
+
