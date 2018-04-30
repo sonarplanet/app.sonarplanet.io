@@ -12,11 +12,14 @@ module.exports = merge.strategy({
         use: [
           {
             loader: 'webpack-replace',
-            query:
-              {
-                search: '%%SONAR_BACK_URL%%',
-                replace: 'http://localhost:8080'
-              }
+            query: {
+              replace: [
+                {
+                  from: '%%SONAR_BACK_URL%%',
+                  to: 'http://localhost:8080'
+                }
+              ]
+            }
           }
         ]
       }

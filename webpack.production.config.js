@@ -14,11 +14,14 @@ module.exports = merge.strategy({
         use: [
           {
             loader: 'webpack-replace',
-            query:
-              {
-                search: '%%SONAR_BACK_URL%%',
-                replace: 'http://wwww.sonarPlanet-services.cleverapps.io'
-              }
+            query: {
+              replace: [
+                {
+                  from: '%%SONAR_BACK_URL%%',
+                  to: 'http://wwww.sonarPlanet-services.cleverapps.io'
+                }
+              ]
+            }
           }
         ]
       }
