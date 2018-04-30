@@ -5,6 +5,10 @@ module.exports = merge.strategy({
   loader: 'append'
 })(common_webpack, {
   mode: "development",
+  devServer: {
+    contentBase: "dist",
+    port: 3000
+  },
   module: {
     rules: [
       {
