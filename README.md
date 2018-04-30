@@ -2,7 +2,7 @@
 
 ## Install
 ```
-yarn install
+yarn
 ```
 
 ## Build
@@ -13,9 +13,9 @@ Generates files in dist repository
 yarn dev
 ```
 
-### Non Production mode
+### Integration mode
 ```
-yarn noprod
+yarn integ
 ```
 
 ### Development mode
