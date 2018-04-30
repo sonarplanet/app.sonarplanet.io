@@ -4,7 +4,7 @@
   "description": "Address tracker",
   "main": "app.js",
   "repository": "git@github.com:sonarplanet/sonarplanet.github.io.git",
-  "author": "spacelephant",
+  "author": "ftreguer",
   "license": "Apache-2.0",
   "scripts": {
     "dev": "webpack-dev-server -p --progress --config=webpack.development.config.js --mode development",

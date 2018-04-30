@@ -18,7 +18,7 @@ module.exports = merge.strategy({
               replace: [
                 {
                   from: '%%SONAR_BACK_URL%%',
-                  to: 'https://www.sonarplanet-services-no-prod.cleverapps.io'
+                  to: 'https://sonarplanet-services-noprod.cleverapps.io'
                 }
               ]
             }
