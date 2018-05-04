@@ -1,60 +1,127 @@
-const sonarplanetBackendUrl = '%%SONAR_BACK_URL%%'
+const rootContext = '/api/v1'
+const sonarplanetBackendUrl = '%%SONAR_BACK_URL%%' + rootContext
 const register = '/register-to-notification'
 
+const tempUBID = '123456789'
+
+const accountsUrl = sonarplanetBackendUrl + '/accounts/'
+const subscriptionUrl = accountsUrl + tempUBID + '/networks/ETHEREUM_KOVAN/' + 'public-address-subscriptions'
+const webpushNotificationUrl = accountsUrl + '/' + tempUBID + '/webpush-notifications'
+
+
 $(document).ready(() => {
+  createAccountIfNeeded()
   var form = document.getElementById("trackAddressForm") as HTMLFormElement;
   form.addEventListener('submit', event => {
-    trackAddressNow(event);
+    trackAddressNow(event)
   })
-});
+})
 
 let trackAddressNow = (event: Event) => {
-  event.preventDefault();
-  $('.alert').each((index: Number, alert: HTMLElement) => {
-    $(alert).css('display', 'none')
+  event.preventDefault()
+  resetAlerts()
+  var inputAddress = document.getElementById("trackAddress") as HTMLInputElement
+  registerServiceWorker(inputAddress.value).then((serviceWorkerRegistration) => {
+    subscribeDevice(serviceWorkerRegistration).then((subscription) => {
+      createWebPushNotification(subscription).then(webPushNotification => {
+        createPublicAddressSubscription(inputAddress.value).then(
+          response => {
+            console.info("Public address subscription success")
+            $('.alert.alert-success').css('display', 'block')
+          },
+          err => {
+            console.error("Error during public address subscription")
+            $('.alert.alert-danger').css('display', 'block')
+          }
+        )
+      })
+    })
   })
-  var inputAddress = document.getElementById("trackAddress") as HTMLInputElement;
-  registerServiceWorker(inputAddress.value);
 }
 
 let registerServiceWorker = (ethAddress: string) => {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./js/service-worker.js')
-      .then((registration) => {
-        console.log('Registration succeeded.')
-        subscribeDevice(registration, ethAddress)
-      }, err => {
-        console.log("error 0")
-      }).catch((error) => {
-        console.log('Registration failed with ' + error)
-      })
-  } else  {
-    $('.alert.alert-warning').css('display', 'block')
-  }
+  return navigator.serviceWorker.register('./js/service-worker.js').then(serviceWorkerRegistration => {
+    console.info("Service worker registered")
+    return serviceWorkerRegistration
+  },
+    err => {
+      console.error("Error during service worker registration. " + err)
+      return err
+    })
 }
 
-let subscribeDevice = (registration: ServiceWorkerRegistration, ethAddress: string) => {
-  if (registration && registration.pushManager) {
-    registration.pushManager.subscribe({ userVisibleOnly: false }).then(
-      subscription => {
-        let subscriptionObject = {
-          subscription: subscription,
-          address: ethAddress
-        }
-        $.post(sonarplanetBackendUrl + register, JSON.stringify(subscriptionObject), (data: JSON) => { })
-          .done(() => { $('.alert.alert-success').css('display', 'block') })
-          .fail((jqXHR, textStatus, errorThrown) => {
-            console.log(errorThrown)
-            $('.alert.alert-danger').css('display', 'block')
-          })
-      },
-      err => {
-        console.log("error 2")
+let createWebPushNotification = (subscription: PushSubscription) => {
+  return fetch(webpushNotificationUrl, {
+    method: 'post',
+    body: JSON.stringify({ subscription })
+  }).then(webPushNotification => {
+    console.info("Web push notification parameters created.")
+    return webPushNotification
+  },
+    err => {
+      console.error("Error occured during webpush notif parameters creation")
+      return err
+    }
+  )
+}
+
+let subscribeDevice = (registration: ServiceWorkerRegistration) => {
+  return registration.pushManager.subscribe({ userVisibleOnly: false }).then(
+    subscription => {
+      console.info("Device registered to push server")
+      return subscription
+    },
+    err => {
+      console.error("Error during device registration")
+      return err
+    }
+  )
+}
+
+let resetAlerts = () => {
+  $('.alert').each((index: Number, alert: HTMLElement) => {
+    $(alert).css('display', 'none')
+  })
+}
+
+
+// Account
+let createAccountIfNeeded = () => {
+  fetch(accountsUrl + tempUBID, {
+    method: 'GET'
+  }).then(
+    (response) => {
+      if (response.status === 404) {
+        createAccount()
       }
-    )
-      .catch((subscriptionErr) => {
-        console.log(subscriptionErr)
-        $('.alert.alert-danger').css('display', 'block')
-      })
-  }
+    },
+    (err) => {
+      console.log('Error: Account')
+    }
+  )
+}
+
+let createAccount = () => {
+  fetch(accountsUrl, {
+    method: 'post',
+    body: JSON.stringify({
+      ubid: tempUBID
+    })
+  }).then(
+    (response) => {
+      console.info('Account created')
+    }, (err) => {
+      console.error('Error during account creation')
+    }
+  )
+}
+
+//PublicAddressSubscription
+let createPublicAddressSubscription = (address: String) => {
+  return fetch(subscriptionUrl, {
+    method: 'post',
+    body: JSON.stringify({
+      publicAddress: address
+    })
+  })
 }
