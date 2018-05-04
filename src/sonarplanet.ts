@@ -26,17 +26,25 @@ let trackAddressNow = (event: Event) => {
       createWebPushNotification(subscription).then(webPushNotification => {
         createPublicAddressSubscription(inputAddress.value).then(
           response => {
-            console.info("Public address subscription success")
-            $('.alert.alert-success').css('display', 'block')
+            if (response.status != 201) {
+              showAlert("Error during public address subscription creation", "danger")
+            } else {
+              showAlert("Public address subscription success", "success")
+            }
           },
           err => {
-            console.error("Error during public address subscription")
-            $('.alert.alert-danger').css('display', 'block')
+            showAlert("Error during public address subscription creation", "danger")
           }
         )
       })
     })
   })
+}
+
+
+let showAlert = (consoleMsg: string, level: string) => {
+  console.error(consoleMsg)
+  $('.alert.alert-'+level).css('display', 'block')
 }
 
 let registerServiceWorker = (ethAddress: string) => {
@@ -109,7 +117,11 @@ let createAccount = () => {
     })
   }).then(
     (response) => {
-      console.info('Account created')
+      if (response.status != 201) {
+        console.info('Error during account creation')
+        $('.alert.alert-danger').css('display', 'block')
+        $('.track-btn').prop('disabled', true)
+      }
     }, (err) => {
       console.error('Error during account creation')
     }
