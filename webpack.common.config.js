@@ -1,5 +1,4 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin")
-const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin')
 
 module.exports = {
   entry: {

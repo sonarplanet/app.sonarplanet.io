@@ -13,13 +13,10 @@ module.exports = merge.strategy({
         test: /\.ts$/,
         use: [
           {
-            loader: 'webpack-replace',
-            query: {
-              replace: [
-                {
-                  from: '%%SONAR_BACK_URL%%',
-                  to: 'https://sonarplanet-services-noprod.cleverapps.io'
-                }
+            loader: 'string-replace-loader',
+            options: {
+              multiple: [
+                { search: '%%SONAR_BACK_URL%%', replace: 'https://sonarplanet-services-noprod.cleverapps.io' }
               ]
             }
           }
