@@ -1,33 +1,64 @@
 {
   "name": "sonarplanet",
-  "version": "1.0.0",
-  "description": "Address tracker",
+  "version": "0.0.0",
+  "description": "Sonar Planet front-end (html, ts)",
   "main": "app.js",
-  "repository": "git@github.com:sonarplanet/sonarplanet.github.io.git",
-  "author": "ftreguer",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:sonarplanet/sonarplanet.github.io.git"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "collectCoverage": false,
+    "automock": false
+  },
+  "bugs": {
+    "url": "https://github.com/sonarplanet/sonarplanet.github.io/issues"
+  },
+  "homepage": "https://github.com/sonarplanet/sonarplanet.github.io/README.md",
+  "author": "TREGUER Fabien <fabien.treguer@spacelephant.org> http://spacelephant.org#fabien",
   "license": "Apache-2.0",
   "scripts": {
     "dev": "webpack-dev-server -p --progress --config=webpack.development.config.js --mode development",
     "integ": "webpack -p --progress --config=webpack.integ.config.js --mode development",
-    "prod": "webpack --config=webpack.production.config.js --mode production"
+    "prod": "webpack --config=webpack.production.config.js --mode production",
+    "test": "jest"
   },
   "devDependencies": {
+    "@types/fetch-mock": "^6.0.1",
+    "@types/jest": "^22.2.3",
     "@types/jquery": "^3.3.1",
+    "@types/node-fetch": "^1.6.9",
     "css-loader": "^0.28.11",
+    "fetch-mock": "^6.3.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^22.4.3",
+    "node-fetch": "^2.1.2",
     "node-sass": "^4.8.3",
     "responsive-loader": "^1.1.0",
     "sass-loader": "^7.0.1",
-    "serviceworker-webpack-plugin": "^0.2.3",
     "sharp": "^0.20.1",
+    "string-replace-loader": "^2.1.1",
     "style-loader": "^0.21.0",
+    "ts-jest": "^22.4.5",
     "ts-loader": "^4.2.0",
     "typescript": "^2.8.3",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.0.15",
     "webpack-dev-server": "^3.1.3",
-    "webpack-merge": "^4.1.2",
-    "webpack-replace": "^1.0.0"
+    "webpack-merge": "^4.1.2"
   }
 }

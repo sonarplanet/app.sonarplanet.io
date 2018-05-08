@@ -15,13 +15,10 @@ module.exports = merge.strategy({
         test: /\.ts$/,
         use: [
           {
-            loader: 'webpack-replace',
-            query: {
-              replace: [
-                {
-                  from: '%%SONAR_BACK_URL%%',
-                  to: 'http://localhost:8080'
-                }
+            loader: 'string-replace-loader',
+            options: {
+              multiple: [
+                { search: '%%SONAR_BACK_URL%%', replace: 'http://localhost:8080' }
               ]
             }
           }
