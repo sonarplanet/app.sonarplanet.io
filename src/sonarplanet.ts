@@ -4,7 +4,7 @@ import * as SonarPlanetAPI from "./sonarplanetAPI"
 $(document).ready(() => {
   SonarPlanetAPI.createAccountIfNeeded().then(
     (response) => {
-      if (response.status != 200) {
+      if ([201,200].indexOf(response.status) === -1) {
         $('.alert.alert-danger').css('display', 'block')
         $('.track-btn').prop('disabled', true)
       }
@@ -24,7 +24,7 @@ let trackAddressNow = (event: Event) => {
   event.preventDefault()
   resetAlerts()
   var inputAddress = document.getElementById("trackAddress") as HTMLInputElement
-  SonarPlanetAPI.registerServiceWorker(inputAddress.value).then((serviceWorkerRegistration) => {
+  SonarPlanetAPI.registerServiceWorker().then((serviceWorkerRegistration) => {
     SonarPlanetAPI.subscribeDevice(serviceWorkerRegistration).then((subscription) => {
       SonarPlanetAPI.createWebPushNotification(subscription).then(webPushNotification => {
         SonarPlanetAPI.createPublicAddressSubscription(inputAddress.value).then(
