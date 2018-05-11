@@ -88,12 +88,13 @@ export function createWebPushNotification(subscription: PushSubscription) {
  * Create a browser account if needed. Check if an account exists in backend and create it if not.
  */
 export function createAccountIfNeeded() {
-  return fetch(accountsUrl + getBrowserId(), {
+  let browserId = getBrowserId()
+  return fetch(accountsUrl + browserId, {
     method: 'GET'
   }).then(
     (response) => {
       if (response.status === 404) {
-        return createAccount()
+        return createAccount(browserId)
       }
       return response
     },
@@ -107,11 +108,11 @@ export function createAccountIfNeeded() {
 /**
  * Create a browser account
  */
-let createAccount = () => {
+let createAccount = (browserId: string) => {
   return fetch(accountsUrl, {
     method: 'post',
     body: JSON.stringify({
-      ubid: getBrowserId()
+      ubid: browserId
     })
   })
 }
