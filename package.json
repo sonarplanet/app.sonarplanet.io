@@ -31,9 +31,9 @@
   "author": "TREGUER Fabien <fabien.treguer@spacelephant.org> http://spacelephant.org#fabien",
   "license": "Apache-2.0",
   "scripts": {
-    "dev": "webpack-dev-server -p --progress --config=webpack.development.config.js --mode development",
-    "integ": "webpack -p --progress --config=webpack.integ.config.js --mode development",
-    "prod": "webpack --config=webpack.production.config.js --mode production",
+    "dev": "WEBPACK_ENV_MOVE=development webpack-dev-server -p --progress",
+    "integ": "WEBPACK_ENV_MOVE=integration webpack -p --progress",
+    "prod": "WEBPACK_ENV_MOVE=production webpack",
     "test": "jest"
   },
   "devDependencies": {

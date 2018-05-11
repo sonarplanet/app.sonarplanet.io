@@ -1,5 +1,9 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin")
 
+const configurations = require('./src/properties.json')
+const env = process.env.WEBPACK_ENV_MOVE
+const configuration = configurations[env]
+
 module.exports = {
   entry: {
     sonarplanet: ['./src/sonarplanet.ts', './src/styles/sonarplanet.scss'],
@@ -11,6 +15,7 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
   },
+  mode: configuration.mode,
   module: {
     rules: [
       {
@@ -18,9 +23,17 @@ module.exports = {
         exclude: [
           /node_modules/
         ],
-        use: {
-          loader: "ts-loader"
-        }
+        use: [
+          { loader: "ts-loader" },
+          {
+            loader: 'string-replace-loader',
+            options: {
+              multiple: [
+                { search: '%%SONAR_BACK_URL%%', replace: configuration.sonarplanetBackendUrl }
+              ]
+            }
+          }
+        ]
       },
       {
         test: /\.html$/,
@@ -52,7 +65,13 @@ module.exports = {
       }
     ]
   },
-  plugins: [
+  plugins: getPlugins(env),
+  devServer: configuration.devServer
+}
+
+
+function getPlugins(env) {
+  var commonPlugins = [
     new HtmlWebPackPlugin({
       template: "./src/index.html",
       filename: "./index.html",
@@ -61,4 +80,17 @@ module.exports = {
     })
   ]
 
+  const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+  let uglifyPlugin = new UglifyJsPlugin({
+    test: /\.js($|\?)/i,
+    sourceMap: true
+  })
+
+  switch (env) {
+    case 'integration':
+      return commonPlugins.concat([uglifyPlugin])
+    case 'production':
+      return commonPlugins.concat([uglifyPlugin])
+  }
+  return commonPlugins
 }

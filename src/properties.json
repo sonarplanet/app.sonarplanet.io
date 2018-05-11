@@ -1,0 +1,18 @@
+{
+  "development": {
+    "sonarplanetBackendUrl": "http://localhost:8080",
+    "mode": "development",
+    "devServer": {
+      "contentBase": "dist",
+      "port": 3000
+    }
+  },
+  "integration": {
+    "sonarplanetBackendUrl": "https://sonarplanet-services-noprod.cleverapps.io",
+    "mode": "development"
+  },
+  "production": {
+    "sonarplanetBackendUrl": "https://sonarplanet-services-noprod.cleverapps.io",
+    "mode": "production"
+  }
+}
