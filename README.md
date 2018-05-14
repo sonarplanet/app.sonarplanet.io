@@ -25,5 +25,10 @@ yarn integ
 yarn prod
 ```
 
+### Tests
+```
+yarn test
+```
+
 ### Pseudo Unique ID
 A pseudo-unique 42 character length id is generated and stored in session storage to associate browser and every created notification (```sonarplanet_unique_id```)

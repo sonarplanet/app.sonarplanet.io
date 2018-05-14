@@ -1,7 +1,7 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin")
 
 const configurations = require('./src/properties.json')
-const env = process.env.WEBPACK_ENV_MOVE
+const env = process.env.WEBPACK_ENV_MODE
 const configuration = configurations[env]
 
 module.exports = {
@@ -87,6 +87,18 @@ function getPlugins(env) {
   })
 
   switch (env) {
+    case 'development': {
+      commonPlugins.concat[
+        new UglifyJsPlugin({
+          test: /\.js($|\?)/i,
+          sourceMap: true,
+          uglifyOptions: {
+            compress: false,
+            mangle: false
+          }
+        })
+      ]
+    }
     case 'integration':
       return commonPlugins.concat([uglifyPlugin])
     case 'production':
