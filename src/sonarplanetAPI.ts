@@ -1,18 +1,25 @@
 import * as ShortUniqueId from 'short-unique-id';
 
+
+export const SONAR_PLANET_ID_SESSION_STORAGE = "sonarplanet_unique_id"
+
 // Instantiate
 const uid = new ShortUniqueId();
 
 /**
  * Generate a unique random id and store it in sessionstorage
  */
-let getBrowserId = () => {
+export function getBrowserId() {
   let uniqueBrowserId = sessionStorage.getItem("sonarplanet_unique_id")
   if (!uniqueBrowserId) {
-    uniqueBrowserId = uid.randomUUID(42)
-    sessionStorage.setItem("sonarplanet_unique_id", uniqueBrowserId)
+    uniqueBrowserId = getUniqueId()
+    sessionStorage.setItem(SONAR_PLANET_ID_SESSION_STORAGE, uniqueBrowserId)
   }
   return uniqueBrowserId
+}
+
+export function getUniqueId() {
+  return uid.randomUUID(42)
 }
 
 const rootContext = '/api/v1'
