@@ -1,1 +1,1 @@
-declare module 'short-unique-id'
+declare module 'short-unique-id';

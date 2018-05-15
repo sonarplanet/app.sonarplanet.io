@@ -1,33 +1,32 @@
 interface Window {
-  registration: ServiceWorkerRegistration,
-  clients: any
+  registration: ServiceWorkerRegistration;
+  clients: any;
 }
 
 interface Event {
-  notification: any,
-  waitUntil: Function
+  notification: any;
+  waitUntil: Function;
 }
 
 self.addEventListener('push', (event: MessageEvent) => {
-  var url;
+  let url;
   if (event.data) {
-    url = event.data.json().url
+    url = event.data.json().url;
   }
 
-  var notificationOptions = {
+  const NOTIFICATION_OPTIONS = {
     body: "Une nouvelle transaction sur l'adresse que vous suivez. Cliquez pour plus d'informations.",
     icon: '../images/logo-sonarplanet-dark.png',
     data: {
-      url: url
-    }
-  }
+      url: url,
+    },
+  };
 
-  self.registration.showNotification("Notification Sonar Planet", notificationOptions);
-
+  self.registration.showNotification('Notification Sonar Planet', NOTIFICATION_OPTIONS);
 });
 
-self.addEventListener('notificationclick', function (event) {
-  var url = event.notification.data.url;
+self.addEventListener('notificationclick', function(event) {
+  const URL = event.notification.data.url;
   event.notification.close();
-  event.waitUntil(self.clients.openWindow(url));
+  event.waitUntil(self.clients.openWindow(URL));
 });
