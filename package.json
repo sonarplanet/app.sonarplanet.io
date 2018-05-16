@@ -1,11 +1,11 @@
 {
-  "name": "sonarplanet",
+  "name": "app.sonarplanet.io",
   "version": "0.0.0",
-  "description": "Sonar Planet front-end (html, ts)",
+  "description": "Sonar Planet webapp",
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git@github.com:sonarplanet/sonarplanet.github.io.git"
+    "url": "git@github.com:sonarplanet/app.sonarplanet.io.git"
   },
   "jest": {
     "transform": {
@@ -26,9 +26,9 @@
     "setupTestFrameworkScriptFile": "mock-local-storage"
   },
   "bugs": {
-    "url": "https://github.com/sonarplanet/sonarplanet.github.io/issues"
+    "url": "https://github.com/sonarplanet/app.sonarplanet.io/issues"
   },
-  "homepage": "https://github.com/sonarplanet/sonarplanet.github.io/README.md",
+  "homepage": "https://github.com/sonarplanet/app.sonarplanet.io/README.md",
   "author": "TREGUER Fabien <fabien.treguer@spacelephant.org> http://spacelephant.org#fabien",
   "license": "Apache-2.0",
   "scripts": {
