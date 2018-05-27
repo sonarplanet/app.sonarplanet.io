@@ -1,5 +1,6 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const configurations = require('./src/properties.json');
 const env = process.env.WEBPACK_ENV_MODE;
 const configuration = configurations[env];
@@ -114,30 +115,30 @@ function getPlugins(env) {
   const faviconCopyPlugin = new FaviconCopyPlugin();
   commonPlugins.push(faviconCopyPlugin);
 
-  const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-  let uglifyPlugin = new UglifyJsPlugin({
-    test: /\.js($|\?)/i,
-    sourceMap: true,
-  });
+  let uglifyPlugin;
 
   switch (env) {
-    case 'development': {
-      commonPlugins.concat[
-        new UglifyJsPlugin({
-          test: /\.js($|\?)/i,
-          sourceMap: true,
-          uglifyOptions: {
-            compress: false,
-            mangle: false,
-          },
-        })
-      ];
-    }
+    case 'development':
     case 'integration':
-      return commonPlugins.concat([uglifyPlugin]);
+      uglifyPlugin = new UglifyJsPlugin({
+        test: /\.js($|\?)/i,
+        sourceMap: true,
+        uglifyOptions: {
+          compress: false,
+          mangle: false,
+        },
+      });
+      break;
+
     case 'production':
-      return commonPlugins.concat([uglifyPlugin]);
+    default:
+      uglifyPlugin = new UglifyJsPlugin({
+        test: /\.js($|\?)/i,
+        sourceMap: true,
+      });
   }
+  commonPlugins.push(uglifyPlugin);
+
   return commonPlugins;
 }
 
