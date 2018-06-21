@@ -24,7 +24,7 @@ export function getUniqueId() {
 const rootContext = '/api/v1';
 const sonarplanetBackendUrl = '%%SONAR_BACK_URL%%' + rootContext;
 const accountsUrl = sonarplanetBackendUrl + '/accounts/';
-const subscriptionUrl = accountsUrl + getBrowserId() + '/networks/ETHEREUM_KOVAN/' + 'public-address-subscriptions';
+const subscriptionUrl = accountsUrl + getBrowserId() + '/networks/defaultEthereumKovan/' + 'public-address-subscriptions';
 const webpushNotificationUrl = accountsUrl + '/' + getBrowserId() + '/webpush-notifications';
 
 /**
