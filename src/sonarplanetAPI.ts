@@ -24,7 +24,7 @@ export function getUniqueId() {
 const rootContext = '/api/v1';
 const sonarplanetBackendUrl = '%%SONAR_BACK_URL%%' + rootContext;
 const accountsUrl = sonarplanetBackendUrl + '/accounts/';
-const subscriptionUrl = accountsUrl + getBrowserId() + '/networks/defaultEthereumKovan/' + 'public-address-subscriptions';
+const subscriptionUrl = accountsUrl + getBrowserId() + '/networks/';
 const webpushNotificationUrl = accountsUrl + '/' + getBrowserId() + '/webpush-notifications';
 
 /**
@@ -64,8 +64,8 @@ export function subscribeDevice(registration: ServiceWorkerRegistration) {
  * Create Public Address Subscription to trigger notifications
  * @param address String : Public address to track
  */
-export function createPublicAddressSubscription(address: String) {
-  return fetch(subscriptionUrl, {
+export function createPublicAddressSubscription(address: String, network: String) {
+  return fetch(subscriptionUrl + network + '/public-address-subscriptions', {
     method: 'post',
     body: JSON.stringify({
       publicAddress: address,
@@ -88,6 +88,23 @@ export function createWebPushNotification(subscription: PushSubscription) {
     },
     (err) => {
       console.error('Error occured during webpush notif parameters creation');
+      return err;
+    },
+  );
+}
+
+/**
+ * Get the list of available networks.
+ */
+export function getNetworks() {
+  return fetch(sonarplanetBackendUrl + "/networks", {
+    method: 'GET',
+  }).then(
+    (response) => {
+      return response.json();
+    },
+    (err) => {
+      console.log('Error: Networks');
       return err;
     },
   );
